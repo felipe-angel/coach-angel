@@ -1,20 +1,41 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+//app.js
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+
+import HomeScreen    from './screens/HomeScreen';
+import ChatScreen    from './screens/ChatScreen';
+import PlannerScreen from './screens/PlannerScreen';
+import MacroCalculatorScreen from './screens/MacroCalculatorScreen';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen 
+          name="Home" 
+          component={HomeScreen} 
+          options={{ title: 'Coach App' }}
+        />
+        <Stack.Screen 
+          name="Chat" 
+          component={ChatScreen} 
+          options={{ title: 'Chat with Coach' }}
+        />
+        <Stack.Screen 
+          name="Planner" 
+          component={PlannerScreen} 
+          options={{ title: 'Workout Planner' }}
+        />
+        <Stack.Screen
+          name="Macros"
+          component={MacroCalculatorScreen}
+          options={{ title: 'Macros & Calories' }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
