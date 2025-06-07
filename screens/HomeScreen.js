@@ -12,6 +12,7 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import colors from '../theme/colors';
+import { IS_PREMIUM } from '../lib/constants';
 
 const { width } = Dimensions.get('window');
 
@@ -26,47 +27,68 @@ export default function HomeScreen({ navigation }) {
         </View>
 
         <View style={styles.buttonContainer}>
-          {/* Chat with Coach */}
+          {/* Free Programs */}
           <TouchableOpacity
             style={styles.card}
-            onPress={() => navigation.navigate('Chat')}
+            onPress={() => navigation.navigate('Programs')}
             activeOpacity={0.8}
           >
-            <LinearGradient colors={[colors.blue, colors.cyan]} style={styles.iconCircle}>
-              <Ionicons name="chatbubbles-outline" size={28} color={colors.white} />
+            <LinearGradient colors={[colors.cyan, colors.blue]} style={styles.iconCircle}>
+              <Ionicons name="list" size={28} color={colors.white} />
             </LinearGradient>
-            <Text style={styles.cardTitle}>Chat with Coach</Text>
-            <Text style={styles.cardSubtitle}>Instant AI Q&A</Text>
+            <Text style={styles.cardTitle}>Free Programs</Text>
+            <Text style={styles.cardSubtitle}>Hypertrophy, Powerlifting, Cardio</Text>
           </TouchableOpacity>
 
-          {/* Workout Planner */}
-          <TouchableOpacity
-            style={styles.card}
-            onPress={() => navigation.navigate('Planner')}
-            activeOpacity={0.8}
-          >
-            <LinearGradient colors={[colors.blue, colors.purple]} style={styles.iconCircle}>
-              <Ionicons name="barbell-outline" size={28} color={colors.white} />
-            </LinearGradient>
-            <Text style={styles.cardTitle}>Workout Planner</Text>
-            <Text style={styles.cardSubtitle}>Generate custom plans</Text>
-          </TouchableOpacity>
+          {IS_PREMIUM && (
+            <>
+              {/* Chat with Coach */}
+              <TouchableOpacity
+                style={styles.card}
+                onPress={() => navigation.navigate('Chat')}
+                activeOpacity={0.8}
+              >
+                <LinearGradient colors={[colors.blue, colors.cyan]} style={styles.iconCircle}>
+                  <Ionicons name="chatbubbles-outline" size={28} color={colors.white} />
+                </LinearGradient>
+                <Text style={styles.cardTitle}>Chat with Coach</Text>
+                <Text style={styles.cardSubtitle}>Instant AI Q&A</Text>
+              </TouchableOpacity>
 
-          {/* Macros & Calories */}
-          <TouchableOpacity
-            style={styles.card}
-            onPress={() => navigation.navigate('Macros')}
-            activeOpacity={0.8}
-          >
-            <LinearGradient colors={[colors.cyan, colors.purple]} style={styles.iconCircle}>
-              <Ionicons name="calculator-outline" size={28} color={colors.white} />
-            </LinearGradient>
-            <Text style={styles.cardTitle}>Macros & Calories</Text>
-            <Text style={styles.cardSubtitle}>Calculate your intake</Text>
-          </TouchableOpacity>
+              {/* Workout Planner */}
+              <TouchableOpacity
+                style={styles.card}
+                onPress={() => navigation.navigate('Planner')}
+                activeOpacity={0.8}
+              >
+                <LinearGradient colors={[colors.blue, colors.purple]} style={styles.iconCircle}>
+                  <Ionicons name="barbell-outline" size={28} color={colors.white} />
+                </LinearGradient>
+                <Text style={styles.cardTitle}>Workout Planner</Text>
+                <Text style={styles.cardSubtitle}>Generate custom plans</Text>
+              </TouchableOpacity>
+
+              {/* Macros & Calories */}
+              <TouchableOpacity
+                style={styles.card}
+                onPress={() => navigation.navigate('Macros')}
+                activeOpacity={0.8}
+              >
+                <LinearGradient colors={[colors.cyan, colors.purple]} style={styles.iconCircle}>
+                  <Ionicons name="calculator-outline" size={28} color={colors.white} />
+                </LinearGradient>
+                <Text style={styles.cardTitle}>Macros & Calories</Text>
+                <Text style={styles.cardSubtitle}>Calculate your intake</Text>
+              </TouchableOpacity>
+            </>
+          )}
         </View>
 
+        {!IS_PREMIUM && (
+          <Text style={styles.disclaimer}>Upgrade to Premium to unlock AI chat and more.</Text>
+        )}
         <Text style={styles.footer}>Start your transformation</Text>
+        <Text style={styles.disclaimer}>Not medical advice. For education only.</Text>
       </LinearGradient>
     </SafeAreaView>
   );
@@ -101,5 +123,6 @@ const styles = StyleSheet.create({
   },
   cardTitle:     { color: colors.white, fontSize: 18, fontWeight: '600' },
   cardSubtitle:  { color: colors.cyan, fontSize: 14, marginTop: 4 },
-  footer:        { color: colors.white, fontSize: 14, marginBottom: 24 },
+  footer:        { color: colors.white, fontSize: 14, marginBottom: 12 },
+  disclaimer:    { color: colors.lightGrey, fontSize: 12, marginBottom: 24 },
 });
